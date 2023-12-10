@@ -5,7 +5,7 @@ interface IBaseCommand {
 }
 
 abstract class AbstractCommand implements IBaseCommand {
-  protected constructor(protected readonly _editor: TextEditor) {
+  protected constructor(protected readonly _editor: TextEditorReceiver) {
   }
 
   public undo(): void {
@@ -17,7 +17,7 @@ abstract class AbstractCommand implements IBaseCommand {
 }
 
 class ConcreteBoldCommand extends AbstractCommand {
-  constructor(_editor: TextEditor) {
+  constructor(_editor: TextEditorReceiver) {
     super(_editor);
   }
 
@@ -31,7 +31,7 @@ class ConcreteBoldCommand extends AbstractCommand {
 }
 
 class ConcreteItalicCommand extends AbstractCommand {
-  constructor(_editor: TextEditor) {
+  constructor(_editor: TextEditorReceiver) {
     super(_editor);
   }
 
@@ -45,7 +45,7 @@ class ConcreteItalicCommand extends AbstractCommand {
 }
 
 
-class TextEditor {
+class TextEditorReceiver {
   private readonly _initialState: string;
 
   constructor(private _textContent: string = '') {
@@ -95,7 +95,7 @@ class CommandInvoker {
 
 
 
-const editor = new TextEditor('abc');
+const editor = new TextEditorReceiver('abc');
 const invoker = new CommandInvoker;
 
 invoker.applyCommand( new ConcreteBoldCommand(editor));
