@@ -1,3 +1,19 @@
+/*
+  The Command Pattern involves three components: Command, Receiver, and Invoker.
+  The Receiver performs the actual work,
+  the Command specifies the Receiver and stores the parameters,
+  and the Invoker triggers the Command.
+  A real-world analogy could be a remote control for a television 📺🎮;
+  pressing a button (Invoker) triggers a specific action (Command) to change the channel or volume (Receiver).
+
+  Шаблон команды включает в себя три компонента: команда, приемник и вызывающий объект.
+  Получатель выполняет фактическую работу,
+  Команда указывает Получателя и сохраняет параметры,
+  а Вызов запускает Команду.
+  Реальной аналогией может быть пульт дистанционного управления телевизором 📺🎮;
+  нажатие кнопки (Invoker) запускает определенное действие (Command) для изменения канала или громкости (Receiver).
+ */
+
 interface IBaseCommand {
   execute(): void;
 
@@ -5,7 +21,7 @@ interface IBaseCommand {
 }
 
 abstract class AbstractCommand implements IBaseCommand {
-  protected constructor(protected readonly _editor: TextEditor) {
+  protected constructor(protected readonly _editor: TextEditorReceiver) {
   }
 
   public undo(): void {
@@ -17,7 +33,7 @@ abstract class AbstractCommand implements IBaseCommand {
 }
 
 class ConcreteBoldCommand extends AbstractCommand {
-  constructor(_editor: TextEditor) {
+  constructor(_editor: TextEditorReceiver) {
     super(_editor);
   }
 
@@ -31,7 +47,7 @@ class ConcreteBoldCommand extends AbstractCommand {
 }
 
 class ConcreteItalicCommand extends AbstractCommand {
-  constructor(_editor: TextEditor) {
+  constructor(_editor: TextEditorReceiver) {
     super(_editor);
   }
 
@@ -45,7 +61,7 @@ class ConcreteItalicCommand extends AbstractCommand {
 }
 
 
-class TextEditor {
+class TextEditorReceiver {
   private readonly _initialState: string;
 
   constructor(private _textContent: string = '') {
@@ -95,7 +111,7 @@ class CommandInvoker {
 
 
 
-const editor = new TextEditor('abc');
+const editor = new TextEditorReceiver('abc');
 const invoker = new CommandInvoker;
 
 invoker.applyCommand( new ConcreteBoldCommand(editor));
